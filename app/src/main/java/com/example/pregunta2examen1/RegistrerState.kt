@@ -5,5 +5,12 @@ data class RegistrerState (
     val personaId : String? = null,
     val personaName : String = "",
     val personaEmail: String = "",
-    val personaPassword: String = ""
+    val personaPassword: String = "",
+
+    val items: List<Item> = emptyList(),
+    val itemId : String? = null,
+    val itemName: String ="",
+    val itemQty: String ="",
+    val itemDate: String = ""
+
 )

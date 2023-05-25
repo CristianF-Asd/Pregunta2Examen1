@@ -24,7 +24,7 @@ class  RegistrerViewModel( private val dao:PersonaDao) : ViewModel(){
         }
     }
 
-    fun getUserfromEmail(email: String,password: String) = dao.getPerson(email,password)
+    fun getUserfromEmail(email: String,password: String) = dao.getPerson(email)
 
     fun changeName(name: String){
         state = state.copy(
