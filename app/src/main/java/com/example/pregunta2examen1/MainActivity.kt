@@ -10,6 +10,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
 import com.example.pregunta2examen1.ui.theme.Pregunta2Examen1Theme
 
@@ -25,8 +28,15 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val database = Room.databaseBuilder(this, DataBase::class.java,"persona_db2").build()
                     val dao = database.dao
-                    val viewModel = RegistrerViewModel(dao);
-                    LoginScreen(viewModel)
+                    val viewModel = RegistrerViewModel(dao)
+
+                    val navController = rememberNavController()
+
+                    NavHost(navController = navController, startDestination = "login_page", builder = {
+                        composable("login_page", content = { LoginScreen(viewModel,navController)})
+                        composable("register_page", content = { RegistrerScreen(viewModel,navController)})
+                    })
+
                 }
             }
         }
@@ -34,14 +44,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun LoginApplication() {
+
+
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    Pregunta2Examen1Theme {
-        Greeting("Android")
-    }
-}

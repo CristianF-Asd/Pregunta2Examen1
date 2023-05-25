@@ -1,5 +1,6 @@
 package com.example.pregunta2examen1
 
+import android.app.Person
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -24,7 +25,12 @@ class  RegistrerViewModel( private val dao:PersonaDao) : ViewModel(){
         }
     }
 
-    fun getUserfromEmail(email: String,password: String) = dao.getPerson(email)
+    fun getUserfromEmail(email: String,password: String)
+    {
+
+
+
+    }
 
     fun changeName(name: String){
         state = state.copy(

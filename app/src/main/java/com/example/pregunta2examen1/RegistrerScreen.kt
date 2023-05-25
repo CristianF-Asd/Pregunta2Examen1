@@ -1,5 +1,6 @@
 package com.example.pregunta2examen1
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,10 +15,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 
 @Composable
-fun RegistrerScreen (viewModel: RegistrerViewModel) {
+fun RegistrerScreen (viewModel: RegistrerViewModel,  navcontroller: NavController) {
     val state = viewModel.state
 
 
@@ -45,9 +47,20 @@ fun RegistrerScreen (viewModel: RegistrerViewModel) {
         )
 
         Button(onClick = { viewModel.createPersona() }) {
-            Text(text = "Agregar Usuario")
-        }
+            Text(
+                text = "Agregar Usuario"
 
+            )
+
+        }
+        Button(onClick = {  }) {
+            Text(
+                text = "Regresar ala Pantalla login",
+                modifier = Modifier.clickable(onClick = {
+                    navcontroller.navigate("login_page")
+                })
+            )
+        }
 
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
             items(state.personas) {

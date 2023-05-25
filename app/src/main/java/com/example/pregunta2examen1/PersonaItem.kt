@@ -25,7 +25,7 @@ fun AsistenteItem(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = "${persona.name} $${persona.email}")
+        Text(text = "Nombre= ${persona.name}/Email= ${persona.email}")
         IconButton(onClick = onEdit) {
             Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit")
         }

@@ -26,10 +26,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.clickable
+import androidx.navigation.NavController
 
 
 @Composable
-fun LoginScreen(viewModel:RegistrerViewModel){
+fun LoginScreen(viewModel:RegistrerViewModel, navcontroller:NavController ){
     val state = viewModel
     val context = LocalContext.current
     var email by remember { mutableStateOf("") }
@@ -83,6 +85,15 @@ fun LoginScreen(viewModel:RegistrerViewModel){
                         contrasena = contrasena
 
                     )
+                    Spacer(modifier = Modifier.padding(20.dp))
+                    Text(
+                        text = "Create An Account",
+                        modifier = Modifier.clickable(onClick = {
+                            navcontroller.navigate("register_page")
+                        })
+                    )
+                    Spacer(modifier = Modifier.padding(20.dp))
+
                 }
             }
         }
