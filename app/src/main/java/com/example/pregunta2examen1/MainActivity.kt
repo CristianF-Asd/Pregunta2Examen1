@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    val database = Room.databaseBuilder(this, DataBase::class.java,"persona_db").build()
+                    val database = Room.databaseBuilder(this, DataBase::class.java,"persona_db2").build()
                     val dao = database.dao
                     val viewModel = RegistrerViewModel(dao);
                     LoginScreen(viewModel)
