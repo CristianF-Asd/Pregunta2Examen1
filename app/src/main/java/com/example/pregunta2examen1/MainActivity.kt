@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.room.Room
 import com.example.pregunta2examen1.ui.theme.Pregunta2Examen1Theme
 
 class MainActivity : ComponentActivity() {
@@ -22,7 +23,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    LoginScreen()
+                    val database = Room.databaseBuilder(this, DataBase::class.java,"persona_db").build()
+                    val dao = database.dao
+                    val viewModel = RegistrerViewModel(dao);
+                    LoginScreen(viewModel)
                 }
             }
         }

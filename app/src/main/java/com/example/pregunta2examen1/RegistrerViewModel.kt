@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.UUID
 
-class RegistrerViewModel( private val dao:PersonaDao) : ViewModel(){
+class  RegistrerViewModel( private val dao:PersonaDao) : ViewModel(){
 
     var state by mutableStateOf(RegistrerState())
         private set
@@ -23,6 +23,8 @@ class RegistrerViewModel( private val dao:PersonaDao) : ViewModel(){
             }
         }
     }
+
+    fun getUserfromEmail(email: String,password: String) = dao.getPerson(email,password)
 
     fun changeName(name: String){
         state = state.copy(

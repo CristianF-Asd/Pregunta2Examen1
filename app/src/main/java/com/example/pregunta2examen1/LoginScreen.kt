@@ -2,7 +2,6 @@ package com.example.pregunta2examen1
 
 import androidx.compose.runtime.Composable
 import android.content.Context
-import android.provider.ContactsContract.CommonDataKinds.Email
 import android.util.Patterns
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -28,11 +27,11 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun LoginScreen(){
-    val context = LocalContext.current
 
+@Composable
+fun LoginScreen(viewModel:RegistrerViewModel){
+    val state = viewModel
+    val context = LocalContext.current
     var email by remember { mutableStateOf("") }
     var isValidEmail by remember { mutableStateOf(false) }
 
@@ -62,6 +61,7 @@ fun LoginScreen(){
                             isValidEmail = Patterns.EMAIL_ADDRESS.matcher(email).matches()
                         },
                         isValidEmail
+
                     )
                     RowPassword(
                         contrasena = contrasena,
@@ -74,9 +74,14 @@ fun LoginScreen(){
                         isValidPassword = isValidPassword
                     )
                     RowButtonLogin(
-                        context = context,
+                        viewModel = state,
+
+
                         isValidEmail = isValidEmail,
-                        isValidPassword = isValidPassword
+                        isValidPassword = isValidPassword,
+                        email = email,
+                        contrasena = contrasena
+
                     )
                 }
             }
@@ -88,9 +93,11 @@ fun LoginScreen(){
 
 @Composable
 fun RowButtonLogin(
-    context: Context,
+    viewModel: RegistrerViewModel,
     isValidEmail: Boolean,
-    isValidPassword: Boolean
+    isValidPassword: Boolean,
+    email: String,
+    contrasena: String
 ) {
     Row(
         Modifier
@@ -99,7 +106,7 @@ fun RowButtonLogin(
         horizontalArrangement = Arrangement.Center) {
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { login(context) },
+            onClick = { viewModel.getUserfromEmail(email,contrasena) },
             enabled = isValidEmail && isValidPassword
         ) {
             Text(text = "Inciar Sesión")
@@ -107,9 +114,7 @@ fun RowButtonLogin(
     }
 }
 
-fun login(context: Context) {
-    Toast.makeText(context, "FAKE LOGIN :)", Toast.LENGTH_LONG).show()
-}
+
 
 @Composable
 fun RowPassword(
