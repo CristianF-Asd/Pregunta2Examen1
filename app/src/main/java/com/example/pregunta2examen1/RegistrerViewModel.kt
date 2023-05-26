@@ -1,16 +1,24 @@
 package com.example.pregunta2examen1
 
 import android.app.Person
+import android.content.Context
+import android.widget.Toast
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.UUID
 
 class  RegistrerViewModel( private val dao:PersonaDao) : ViewModel(){
+    private val _showToast = mutableStateOf(false)
+    val showToast: MutableState<Boolean> = _showToast
 
     var state by mutableStateOf(RegistrerState())
         private set
@@ -25,11 +33,22 @@ class  RegistrerViewModel( private val dao:PersonaDao) : ViewModel(){
         }
     }
 
-    fun getUserfromEmail(email: String,password: String)
+    fun getUserfromEmail(navcontroller: NavController, email: String, password: String)
     {
+        viewModelScope.launch {
+            val person = dao.getPerson(email).first()
+            println(person.id)
+            if(person.email==email && person.password==password){
+                navcontroller.navigate("register_page")
+            }else{
+                _showToast.value = true
+            }
+        }
 
+    }
 
-
+    fun showToastComplete() {
+        _showToast.value = false
     }
 
     fun changeName(name: String){

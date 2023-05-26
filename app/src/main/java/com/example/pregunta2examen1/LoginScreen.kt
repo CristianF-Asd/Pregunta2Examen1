@@ -33,6 +33,7 @@ import androidx.navigation.NavController
 @Composable
 fun LoginScreen(viewModel:RegistrerViewModel, navcontroller:NavController ){
     val state = viewModel
+    val nav = navcontroller
     val context = LocalContext.current
     var email by remember { mutableStateOf("") }
     var isValidEmail by remember { mutableStateOf(false) }
@@ -76,9 +77,8 @@ fun LoginScreen(viewModel:RegistrerViewModel, navcontroller:NavController ){
                         isValidPassword = isValidPassword
                     )
                     RowButtonLogin(
+                        nav,
                         viewModel = state,
-
-
                         isValidEmail = isValidEmail,
                         isValidPassword = isValidPassword,
                         email = email,
@@ -93,6 +93,8 @@ fun LoginScreen(viewModel:RegistrerViewModel, navcontroller:NavController ){
                         })
                     )
                     Spacer(modifier = Modifier.padding(20.dp))
+                    
+                    MyScreen(viewModel = state)
 
                 }
             }
@@ -101,15 +103,28 @@ fun LoginScreen(viewModel:RegistrerViewModel, navcontroller:NavController ){
 
 }
 
+@Composable
+fun MyScreen(viewModel: RegistrerViewModel) {
+    val showToast = viewModel.showToast.value
+    val context = LocalContext.current
+    if (showToast) {
+        Toast.makeText(context, "Datos Incorrectos", Toast.LENGTH_SHORT).show()
+        viewModel.showToastComplete()
+    }
+
+    // Resto de la composición de la pantalla
+}
 
 @Composable
 fun RowButtonLogin(
+    navcontroller: NavController,
     viewModel: RegistrerViewModel,
     isValidEmail: Boolean,
     isValidPassword: Boolean,
     email: String,
     contrasena: String
 ) {
+
     Row(
         Modifier
             .fillMaxWidth()
@@ -117,7 +132,7 @@ fun RowButtonLogin(
         horizontalArrangement = Arrangement.Center) {
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { viewModel.getUserfromEmail(email,contrasena) },
+            onClick = { viewModel.getUserfromEmail(navcontroller,email,contrasena) },
             enabled = isValidEmail && isValidPassword
         ) {
             Text(text = "Inciar Sesión")
