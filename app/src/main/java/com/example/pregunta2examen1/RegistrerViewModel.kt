@@ -39,7 +39,7 @@ class  RegistrerViewModel( private val dao:PersonaDao) : ViewModel(){
             val person = dao.getPerson(email).first()
             println(person.id)
             if(person.email==email && person.password==password){
-                navcontroller.navigate("register_page")
+                navcontroller.navigate("item_page/${person.email}")
             }else{
                 _showToast.value = true
             }

@@ -10,11 +10,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import androidx.room.Room
 import com.example.pregunta2examen1.ui.theme.Pregunta2Examen1Theme
+import kotlin.reflect.typeOf
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,11 +33,18 @@ class MainActivity : ComponentActivity() {
                     val dao = database.dao
                     val viewModel = RegistrerViewModel(dao)
 
+
                     val navController = rememberNavController()
 
                     NavHost(navController = navController, startDestination = "login_page", builder = {
-                        composable("login_page", content = { LoginScreen(viewModel,navController)})
-                        composable("register_page", content = { RegistrerScreen(viewModel,navController)})
+                        composable("login_page") {LoginScreen(viewModel,navController)}
+                        composable("register_page") { RegistrerScreen(viewModel,navController)}
+                        composable("item_page"+"/{text}",
+                            arguments = listOf(navArgument(name = "text"){
+                                type = NavType.StringType
+                            })
+                        ) { ItemScreen(navController,it.arguments?.getString("text"))}
+
                     })
 
                 }
